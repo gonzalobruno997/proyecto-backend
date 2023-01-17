@@ -17,17 +17,18 @@ const readArchive = async (rute) =>{
 }
 
 class ProductManager {
-    constructor (){
+    constructor (path){
+        this.path = path
         this.products = []
         this.acumulador = 1
 
     }
-    getProducts = () => readArchive("./db/productos.txt").then((data) => JSON.parse(data) )
+    getProducts = () => readArchive(this.path).then((data) => JSON.parse(data) )
     getProductById = (id) => {
         if(this.products.some((product) => product.id === id)){
             return this.products.find((product) => product.id === id)
         }else{
-            console.log("Not found")
+            return({type:404, content:`el producto con el id ${id} no existe.`})
         }
         
     }
@@ -38,7 +39,7 @@ class ProductManager {
             const indice = this.products.findIndex((product) => product.id === id)
             this.products[indice][propertyToUpdate] = valueToUpdate
         }
-        await saveArchive("./db/productos.txt", this.products)
+        await saveArchive(this.path, this.products)
         
     }
     deleteProduct = async (id) => {
@@ -48,7 +49,7 @@ class ProductManager {
         }else{
             console.log("el producto no existe")
         }
-        await saveArchive ("./db/productos.txt", this.products)
+        await saveArchive (this.path, this.products)
 
     }
     addProduct = async (producto) => {
@@ -71,11 +72,12 @@ class ProductManager {
         }else{
             console.log("ERROR: el producto no cuenta con todas las propiedades solicitadas o cuenta con mas propiedades de las solicitadas")
         }
-        await saveArchive ("./db/productos.txt", this.products)
+        await saveArchive (this.path, this.products)
         
     }
 }
-const productos = new ProductManager ()
+/*
+const productos = new ProductManager ("./db/productos.txt")
 productos.addProduct({title:"lorem", description: "lorem ipsum", price:5000, thumbnail: "url", code: "j124", stock:500})
 productos.addProduct({title:"lorem", description: "lorem ipsum", price:5000, thumbnail: "url", code: "j125", stock:500})
 productos.deleteProduct(2)
@@ -83,6 +85,6 @@ productos.addProduct({title:"lorem", description: "lorem ipsum", price:5000, thu
 
 
 productos.updateProduct(3,"color", "azul")
-productos.getProducts()
+productos.getProducts()*/
 
-
+module.exports = ProductManager
