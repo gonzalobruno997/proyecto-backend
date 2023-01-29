@@ -1,21 +1,4 @@
-const fs = require ("fs")
-const saveArchive = async(rute, content) => {
-    try{
-        await fs.promises.writeFile (rute, JSON.stringify(content))
-        console.log("exito")
-    }catch(error){
-        console.log(error)
-    }
-
-}
-const readArchive = async (rute) =>{
-    try{
-        return fs.promises.readFile(rute, "utf-8")
-    }catch(error){
-        console.log(error)
-    }
-}
-
+const {saveArchive, readArchive} = require("./fileSystemManager")
 class ProductManager {
     constructor (path){
         this.path = path
@@ -23,7 +6,7 @@ class ProductManager {
         this.acumulador = 1
 
     }
-    getProducts = () => readArchive(this.path).then((data) => JSON.parse(data) )
+    getProducts = async () => await readArchive(this.path).then((data) => JSON.parse(data) )
     getProductById = (id) => {
         if(this.products.some((product) => product.id === id)){
             return this.products.find((product) => product.id === id)
@@ -31,6 +14,17 @@ class ProductManager {
             return({type:404, content:`el producto con el id ${id} no existe.`})
         }
         
+    }
+    updateAllProduct = async (id, newProduct) => {
+        console.log(newProduct)
+        console.log(this.products.findIndex(product => product.id === Number(id) ))
+        const index = this.products.findIndex(product => product.id === Number(id) )
+        if(this.products[index].id === Number(newProduct.id) ){
+            this.products[index] = newProduct
+            await saveArchive(this.path, this.products)
+        }else{
+            return ({content:"ERROR: EL ID DEL NUEVO PRODUCTO Y EL DEL PRODUCTO VIEJO DEBEN SER IGUALES"})
+        }
     }
     updateProduct = async (id, propertyToUpdate, valueToUpdate)  => {
         if(propertyToUpdate === "id"){
@@ -54,16 +48,13 @@ class ProductManager {
     }
     addProduct = async (producto) => {
         
-        const properties = ["title", "description", "price", "thumbnail", "code", "stock"]
+        const properties = ["title", "description", "price", "code", "stock"]
         const results = []
-        let acumulador = 0
-        for(let propiedad in producto){
-            results.push(propiedad == properties[acumulador])
-            acumulador++
-
+        for(const property of properties){
+            results.push(Object.keys(producto).includes(property))
         }
         
-        if(results.every((result) => result)){
+        if( results.every((result) => result)){
             if(!this.products.some((product) => product.code === producto.code )){
                 this.products.push({...producto, id: this.acumulador++})
             }else{
