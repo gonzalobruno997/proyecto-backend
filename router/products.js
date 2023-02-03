@@ -52,3 +52,4 @@ routerProducts.put("/:pid", async (req, res) => {
     .then(() => productos.getProducts()).then((products) => res.json(products))
 })
 module.exports = routerProducts
+module.exports = productos
