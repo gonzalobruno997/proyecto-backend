@@ -1,4 +1,6 @@
 const ProductManager = require("./productManager")
+const chatRouter = require("./router/msgRoutes");
+const mongoose = require("mongoose");
 const productos = new ProductManager ("./db/productos.json")
 productos.addProduct({title:"lorem", description: "lorem ipsum", price:5000, thumbnail: "url", code: "j124", stock:500})
 productos.addProduct({title:"lorem", description: "lorem ipsum", price:5000, thumbnail: "url", code: "j125", stock:500})
@@ -19,15 +21,19 @@ app.use(express.urlencoded({extended:true}))
 app.use(express.static("public"));
 app.use(express.json())
 const port = 8080
+app.use("/api", chatRouter);
+app.listen(port, () => {
+    console.log(`http://localhost:${port}`);
+});
 /* const routerProducts = require("./router/products")
 const routerCart = require("./router/carrito")
 app.set("/api/products", routerProducts)
 app.set("/api/carts", routerCart) */
 /* websocket config */
-const {Server: SocketServer} = require("socket.io")
+/* const {Server: SocketServer} = require("socket.io")
 const {Server: HttpServer} = require("http")
 const httpServer = new HttpServer(app)
-const socketServer = new SocketServer(httpServer) 
+const socketServer = new SocketServer(httpServer)  */
 /* handlebars config */
 const handlebars = require("express-handlebars")
 
@@ -46,7 +52,7 @@ app.get("/", (req, res) => {
 app.get("/realtimeproducts", (req , res) => {
     res.render("realtimeProducts")
 }) 
-socketServer.on("connection", (socket) => {
+/* socketServer.on("connection", (socket) => {
     socketServer.sockets.emit(events.INIT, productos.products)
     socketServer.sockets.emit(events.UPDATE_PRODUCT, productos.products)
     socket.on(events.POST_PRODUCT, (product)=>{
@@ -54,9 +60,9 @@ socketServer.on("connection", (socket) => {
         console.log("producto posteado")
         socketServer.sockets.emit(events.UPDATE_PRODUCT, productos.products)
     })
-})
+}) */
 // app.listen(port, () => console.log(`el servidor se abrio en el puerto ${port} `))
-httpServer.listen(port, () => console.log("el servidor se esta escuchando en el puerto " + port))
+// httpServer.listen(port, () => console.log("el servidor se esta escuchando en el puerto " + port))
 
 
 
