@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const uri =
-    "mongodb+srv://gonzalobruno997:1234@cluster0.zjno9zw.mongodb.net/chat?retryWrites=true&w=majority";
+    "mongodb+srv://gonzalobruno997:1234@cluster0.zjno9zw.mongodb.net/Ecommerce?retryWrites=true&w=majority";
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;

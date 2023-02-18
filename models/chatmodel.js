@@ -4,12 +4,9 @@ const Schema = mongoose.Schema;
 const chatSchema = Schema({
     name: {
         type: String,
-        required: true,
-        unique: true,
     },
-    chat: [{
-        author: String,
-        message: String
-    }],
+    chat: {
+        type: String,
+    },
 });
-module.exports = mongoose.model("Chatmsg", chatSchema);
+module.exports = mongoose.model("Messages", chatSchema);
