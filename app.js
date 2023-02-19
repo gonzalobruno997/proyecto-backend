@@ -24,8 +24,8 @@ const port = 8080
 
 const routerProducts = require("./router/products")
 const routerCart = require("./router/carrito")
-app.set("/api/products", routerProducts)
-app.set("/api/carts", routerCart) 
+app.use("/api/products", routerProducts)
+app.use("/api/carts", routerCart) 
 /* websocket config */
 const {Server: SocketServer} = require("socket.io")
 const {Server: HttpServer} = require("http")
@@ -60,7 +60,7 @@ socketServer.on("connection", (socket) => {
 }) 
 // app.listen(port, () => console.log(`el servidor se abrio en el puerto ${port} `))
 // httpServer.listen(port, () => console.log("el servidor se esta escuchando en el puerto " + port))
-app.use("/api", chatRouter);
+app.use("/api/messages", chatRouter);
 app.listen(port, () => {
     console.log(`http://localhost:${port}`);
 });
@@ -68,7 +68,7 @@ app.listen(port, () => {
 
 app.on("ERROR",(error) => console.log("error " + error))
 
-app.get("/api/products", async (req, res) => {
+/* app.get("/api/products", async (req, res) => {
     console.log(req.query.limit)
     if(req.query.limit){
         await productos.getProducts().then((productos) => {
@@ -82,9 +82,9 @@ app.get("/api/products", async (req, res) => {
         await productos.getProducts().then((productos)=> res.json(productos))
     }
     
-})
-app.post("/api/products", async (req, res) => {
+}) */
+/* app.post("/api/products", async (req, res) => {
     const {title, stock, price, code, thumbnail, description} = req.body
     productos.addProduct({title, stock, price, code, thumbnail, description})
     await productos.getProducts().then(productos => res.json(productos))
-})
+}) */

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Chatmodel = require("../models/chatmodel");
 
-router.get("/msg", async (req, res) => {
+router.get("/", async (req, res) => {
     try {
         const messages = await Chatmodel.find();
         res.send(messages);
@@ -10,7 +10,7 @@ router.get("/msg", async (req, res) => {
         console.log(error);
     }
 });
-router.post("/msg", async (req, res) => {
+router.post("/", async (req, res) => {
     try {
         console.log("reqqqq2", req.body);
         const msg = await new Chatmodel({
