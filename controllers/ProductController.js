@@ -1,4 +1,4 @@
-const productservices = require("../services/productservices");
+const productservices = require("../services/productServices");
 
 const getproducts = async (req, res) => {
     try {
@@ -30,7 +30,7 @@ const deleteproductById = async (req, res) => {
         //     content: "ERROR: EL ID INGRESADO NO ES NUMERICO O ES MENOR A 1",
         //   });
         // }
-        await productservices.deleteproductById(Number(pid));
+        await productservices.deleteproductById((pid));
         res.send("se elimino");
     } catch (error) {
         console.log(error);

@@ -21,8 +21,8 @@ const ProductSchema = Schema({
     stock: {
         type: Number,
     },
-    id: {
-        type: Number,
-    },
+    idproducto:{
+        type: Number
+    }
 });
 module.exports = mongoose.model("Products", ProductSchema)

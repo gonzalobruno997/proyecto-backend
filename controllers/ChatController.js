@@ -1,4 +1,4 @@
-const msgservices = require("../services/msgservices");
+const msgservices = require("../services/msgServices");
 
 const getchats = async (req, res) => {
     try {

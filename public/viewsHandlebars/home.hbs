@@ -1,41 +1,49 @@
-
 <section>
     <h2>registre su producto</h2>
     <form id="formProducts">
         <div>
             <label for="">ingrese el nombre de su producto</label>
-            <input type="text" name="title">
+            <input type="text" name="title" />
         </div>
         <div>
             <label for="">ingrese el precio de su producto</label>
-            <input type="text" name="price">
+            <input type="text" name="price" />
         </div>
         <div>
             <label for="">ingrese el stock del producto</label>
-            <input type="number" name="stock" >
+            <input type="number" name="stock" />
         </div>
         <div>
             <label for="">ingrese la url a la imagen de su producto</label>
-            <input type="text" name="thumbnail">
+            <input type="text" name="thumbnail" />
         </div>
         <div>
             <label for="">ingrese el code de su producto</label>
-            <input type="text" name="code" >
+            <input type="text" name="code" />
         </div>
         <div>
             <label for="">ingrese la descripcion de su producto</label>
             <textarea name="description" id="" cols="30" rows="10"></textarea>
         </div>
-        <input type="submit" value="enviar">
+        <input type="submit" value="enviar" />
     </form>
 </section>
-
 
 <div id="updateProducts">
 
 </div>
 
 <div id="contenedorProductos">
-    
+
 </div>
+<h1>Chat Coderhouse</h1>
+<div>
+    <input id="chatBox" />
+</div>
+<div>
+    <p id="messageLogs"></p>
+</div>
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="./javascript/main.js"></script>
