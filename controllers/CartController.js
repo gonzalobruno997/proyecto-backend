@@ -51,11 +51,23 @@ const postcarritoid = async (req, res) => {
 const deletecarrito = async (req, res) => {
     try {
         const {
+            cid
+        } = req.params;
+        await cartservices.deletecartById((cid));
+        res.send("se elimino");
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+const deleteProductInCarrito = async (req, res) => {
+    try {
+        const {
+            cid,
             pid
         } = req.params;
-        console.log("pid2", pid);
-        await cartservices.deletecartById((pid));
-        res.send("se elimino");
+        const cartid = await cartservices.postcarritoid(cid, pid);
+        res.send("se borro el producto");
     } catch (error) {
         console.log(error);
     }
@@ -66,5 +78,6 @@ module.exports = {
     postcarrito,
     postcarritoid,
     getcarritoAll,
-    deletecarrito
+    deletecarrito,
+    deleteProductInCarrito
 };

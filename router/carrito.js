@@ -12,6 +12,8 @@ routerCart.post("/", cartController.postcarrito);
 
 routerCart.post("/:cid/product/:pid", cartController.postcarritoid);
 
-routerCart.delete("/", cartController.deletecarrito);
+routerCart.delete("/:cid", cartController.deletecarrito);
+
+routerCart.delete("/:cid/product/:pid", cartController.deleteProductInCarrito);
 
 module.exports = routerCart

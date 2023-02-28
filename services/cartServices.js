@@ -60,10 +60,29 @@ const deletecartById = async (pid) => {
     }
 };
 
+const deleteProductInCarrito = async (cid, pid) => {
+    const cartid = await CartsModel.findById(cid);
+    console.log("cid", cid, "pid", pid);
+    try {
+        for (let i = 0; i < cartid.products.length; i++) {
+            console.log(i);
+            if (cartid.products[i].idproducto == pid) {
+                delete cartid.products[i]
+                cartid.save();
+                return cartid;
+            }
+        }
+        return "no se encontró";
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 module.exports = {
     getcarts,
     postcarrito,
     postcarritoid,
     getcartsAll,
-    deletecartById
+    deletecartById,
+    deleteProductInCarrito
 };
