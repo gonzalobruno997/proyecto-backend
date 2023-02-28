@@ -1,5 +1,15 @@
 const express = require("express");
 const cartservices = require("../services/cartServices");
+const getcarritoAll = async (req, res) => {
+    try {
+        const cartid = await cartservices.getcartsAll();
+
+        res.send(cartid);
+    } catch (error) {
+        res.send(`${error.message}`);
+    }
+};
+
 const getcarrito = async (req, res) => {
     try {
         const cartid = await cartservices.getcarts(req.params.cid);
@@ -38,8 +48,23 @@ const postcarritoid = async (req, res) => {
     }
 };
 
+const deletecarrito = async (req, res) => {
+    try {
+        const {
+            pid
+        } = req.params;
+        console.log("pid2", pid);
+        await cartservices.deletecartById((pid));
+        res.send("se elimino");
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 module.exports = {
     getcarrito,
     postcarrito,
-    postcarritoid
+    postcarritoid,
+    getcarritoAll,
+    deletecarrito
 };

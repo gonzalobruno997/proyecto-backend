@@ -1,6 +1,11 @@
 const express = require("express");
 const CartsModel = require("../models/cartsmodel");
 
+const getcartsAll = async () => {
+
+        const carts = await CartsModel.find();
+        return carts;
+};
 const getcarts = async (cid) => {
     console.log("cid2", cid);
     if (cid) {
@@ -45,8 +50,20 @@ const postcarritoid = async (cid, pid, quantity) => {
     }
 };
 
+const deletecartById = async (pid) => {
+    try {
+        await CartsModel.deleteOne({
+            _id: pid
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 module.exports = {
     getcarts,
     postcarrito,
     postcarritoid,
+    getcartsAll,
+    deletecartById
 };
