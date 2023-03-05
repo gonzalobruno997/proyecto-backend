@@ -48,12 +48,43 @@ const postcarritoid = async (req, res) => {
     }
 };
 
+const editcarrito = async (req, res) => {
+    try {
+        const {
+            products
+        } = req.body;
+        const {
+            cid
+        } = req.params;
+        const cartid = await cartservices.editcarrito(products, cid);
+
+        res.send(cartid);
+    } catch (error) {
+        res.send(`${error.message}`);
+    }
+};
+const editcarritoid = async (req, res) => {
+    try {
+        const {
+            cid,
+            pid
+        } = req.params;
+        const {
+            quantity
+        } = req.body;
+        const cartid = await cartservices.editcarritoid(cid, pid, quantity);
+        res.send(cartid);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 const deletecarrito = async (req, res) => {
     try {
         const {
             cid
         } = req.params;
-        await cartservices.deletecartById((cid));
+        await cartservices.deletecartById(cid);
         res.send("se elimino");
     } catch (error) {
         console.log(error);
@@ -66,7 +97,7 @@ const deleteProductInCarrito = async (req, res) => {
             cid,
             pid
         } = req.params;
-        const cartid = await cartservices.postcarritoid(cid, pid);
+        const cartid = await cartservices.deleteProductInCarrito(cid, pid);
         res.send("se borro el producto");
     } catch (error) {
         console.log(error);
@@ -78,6 +109,8 @@ module.exports = {
     postcarrito,
     postcarritoid,
     getcarritoAll,
+    editcarrito,
+    editcarritoid,
     deletecarrito,
-    deleteProductInCarrito
+    deleteProductInCarrito,
 };

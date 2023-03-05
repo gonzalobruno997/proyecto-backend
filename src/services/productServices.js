@@ -1,12 +1,33 @@
 const ProductModel = require("../models/productsmodel");
 
-const getproducts = async () => {
+const getproducts = async (opciones, filters) => {
     try {
-        const products = await ProductModel.find();
+        const result = await ProductModel.paginate(filters, opciones);
+        const propName = Object.keys(filters)[0];
 
-        return products;
+        const propValue = filters[propName];
+        console.log("filters", filters);
+        return {
+            status: "success",
+            products: result.docs,
+            totalPages: result.totalPages,
+            prevPage: result.prevPage,
+            nextPage: result.nextPage,
+            page: result.page,
+            hasPrevPage: result.hasPrevPage,
+            hasNextPage: result.hasNextPage,
+            prevLink: result.hasPrevPage ?
+                `http://localhost:8080/api/products?limit=${opciones.limit}&page=${result.prevPage}&sort=${opciones.sort.price}&${propName}=${propValue}` :
+                null,
+            nextLink: result.hasNextPage ?
+                `http://localhost:8080/api/products?limit=${opciones.limit}&page=${result.nextPage}&sort=${opciones.sort.price}&${propName}=${propValue}` :
+                null,
+        };
     } catch (error) {
-        console.log(error);
+        return {
+            status: "error",
+            payload: error.message
+        };
     }
 };
 const getproductById = async (pid) => {
@@ -20,7 +41,7 @@ const getproductById = async (pid) => {
 const deleteproductById = async (pid) => {
     try {
         await ProductModel.deleteOne({
-            _id: pid
+            _id: pid,
         });
     } catch (error) {
         console.log(error);
@@ -52,7 +73,6 @@ const createproduct = async (
         console.log(error);
     }
 };
-
 const editproduct = async (
     pid,
     title,
@@ -70,7 +90,7 @@ const editproduct = async (
         code,
         thumbnail,
         description,
-        id
+        id,
     };
 
     try {
@@ -90,3 +110,4 @@ module.exports = {
     createproduct,
     editproduct,
 };
+

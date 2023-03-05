@@ -2,8 +2,28 @@ const productservices = require("../services/productServices");
 
 const getproducts = async (req, res) => {
     try {
-        const products = await productservices.getproducts();
+        const limit = parseInt(req.query.limit) || 2;
+        const page = parseInt(req.query.page) || 1;
+        const sort = req.query.sort || "-createdAt";
+        // const queryParam = req.query.stock || "";
+        let filters = {};
+        if (req.query) {
+            filters = req.query;
+            delete filters.limit;
+            delete filters.page;
+            delete filters.sort;
+            delete filters.query;
+        }
 
+        const opciones = {
+            page,
+            limit,
+            sort: sort ? {
+                price: sort === "asc" ? 1 : -1
+            } : {},
+        };
+        const products = await productservices.getproducts(opciones, filters);
+        console.log("products", products);
         res.send(products);
     } catch (error) {
         console.log(error);
@@ -30,7 +50,7 @@ const deleteproductById = async (req, res) => {
         //     content: "ERROR: EL ID INGRESADO NO ES NUMERICO O ES MENOR A 1",
         //   });
         // }
-        await productservices.deleteproductById((pid));
+        await productservices.deleteproductById(pid);
         res.send("se elimino");
     } catch (error) {
         console.log(error);
@@ -46,6 +66,7 @@ const createproduct = async (req, res) => {
             thumbnail,
             description
         } = req.body;
+        console.log("reqbody", req.body);
         const products = await productservices.createproduct(
             title,
             stock,
@@ -59,11 +80,10 @@ const createproduct = async (req, res) => {
         console.log(error);
     }
 };
-
 const editproduct = async (req, res) => {
     try {
         const pid = {
-            _id: req.params.pid
+            _id: req.params.pid,
         };
         const {
             title,
@@ -96,4 +116,4 @@ module.exports = {
     deleteproductById,
     createproduct,
     editproduct,
-}
+};
