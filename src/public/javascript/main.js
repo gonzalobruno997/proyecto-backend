@@ -8,7 +8,7 @@ let chatBox = document.getElementById("chatBox");
 // console.log("messages", messages);
 
 //
-Swal.fire({
+/* Swal.fire({
         title: "Identificate",
         input: "text",
         text: "Ingresa un nombre",
@@ -26,7 +26,7 @@ Swal.fire({
             user,
         })
     );
-///;
+///; */
 chatBox.addEventListener("keyup", (evt) => {
     if (evt.key === "Enter") {
         if (chatBox.value.trim().length > 0) {

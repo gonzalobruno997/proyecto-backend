@@ -1,4 +1,32 @@
+<head>
+    <style>
+        .centered-red-background {
+            background-color: red;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 20px;
+            margin-top: 4px;
+        }
+
+        .centered-red-background h1 {
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
 <section>
+    {{#if userName}}
+    <button id="logout" type="button" onclick="location.href='/auth/logout'">Log out</button>
+    <div class="centered-red-background">
+        <h1>{{role}}</h1>
+    </div>
+    <p>Bienvenido, {{userName}}!</p>
+    {{else}}
+    <button id="login" type="button" onclick="location.href='/auth/login'">Log in</button>
+    <button id="login" type="button" onclick="location.href='/auth/register'">Registrarse</button>
+    {{/if}}
+
     <h2>registre su producto</h2>
     <form id="formProducts">
         <div>
@@ -43,9 +71,11 @@
 <div>
     <p id="messageLogs"></p>
 </div>
+
 <input id="carritoId" type="text" placeholder="ID del carrito" />
 <button id="verCarrito" type="button">Ver Carrito</button>
 <div id="carrito" class="cart-button"></div>
+
 <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
