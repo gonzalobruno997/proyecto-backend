@@ -1,5 +1,5 @@
 routerProducts = require("express").Router();
-const ProductManager = require("../../productManager");
+const ProductManager = require("../productManager");
 const productos = new ProductManager("./db/productos.json");
 const ProductModel = require("../models/productsmodel");
 const ProductController = require("../controllers/ProductController");

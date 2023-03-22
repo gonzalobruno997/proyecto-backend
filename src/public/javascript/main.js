@@ -6,27 +6,6 @@ let user;
 let chatBox = document.getElementById("chatBox");
 
 // console.log("messages", messages);
-
-//
-/* Swal.fire({
-        title: "Identificate",
-        input: "text",
-        text: "Ingresa un nombre",
-        inputValidator: (value) => {
-            return !value && "Se necesita un nombre!";
-        },
-        allowOutsideClick: false,
-    })
-    .then((result) => {
-        user = result.value;
-        return user;
-    })
-    .then((user) =>
-        socket.emit("newUserLoged", {
-            user,
-        })
-    );
-///; */
 chatBox.addEventListener("keyup", (evt) => {
     if (evt.key === "Enter") {
         if (chatBox.value.trim().length > 0) {
@@ -57,12 +36,68 @@ socket.on("messages", (data) => {
     });
     log.innerHTML = messages;
 });
-
 socket.on("newUser", (user) => {
     Swal.fire({
         text: `${user.user} se conectó`,
         toast: true,
         position: "top-right",
+    });
+});
+
+//-----------------------------------------------------------------------------------------
+
+// LOGICA AGREGAR AL CARRITO:
+
+// const botones = document.getElementsByClassName("agregarCarrito");
+// console.log(botones);
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   setTimeout(() => {
+//     const botones = document.getElementsByClassName("agregarCarrito");
+//     console.log(botones[0]);
+//   }, 1000); // wait 1 second before executing the code
+// });
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   // console.log(botones[0]);
+//   [...botones].forEach((button) => {
+//     console.log("AFDSAA");
+
+//     button.addEventListener("click", () => {
+//       console.log("HOLAA");
+//     });
+//   });
+// });
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   let agregarCarrito = document.getElementsByClassName("agregarCarrito");
+//   console.log(agregarCarrito);
+
+//   setTimeout(() => {
+//     agregarCarrito.forEach((button) => {
+//       button.addEventListener("click", (event) => {
+//         const productId = event.target.getAttribute("data-id");
+//         console.log("ID DEL PRODUCTO>>>", productId);
+//       });
+//     });
+//   }, 1000);
+// });
+
+document.addEventListener("DOMContentLoaded", () => {
+    let agregarCarrito = document.getElementsByClassName("agregarCarrito");
+
+    setTimeout(() => {
+        let botones = [...agregarCarrito]; // Convert HTMLCollection to array
+        console.log(botones);
+    }, 1000).then((botones) => {
+        botones.forEach((button) => {
+            button.addEventListener("click", (event) => {
+                console.log("HOLA");
+
+                // const productId = event.target.getAttribute("data-id");
+                // console.log("ID DEL PRODUCTO>>>", productId);
+            });
+        });
     });
 });
 
@@ -91,6 +126,7 @@ function obtenerProductos(pagina = 1) {
 
                     const botonesPaginacion = document.createElement("div");
                     botonesPaginacion.classList.add("pagination");
+
                     // Botón "Anterior"
                     if (prevPage) {
                         const botonAnterior = document.createElement("button");
@@ -111,7 +147,6 @@ function obtenerProductos(pagina = 1) {
                         }
                         botonesPaginacion.appendChild(botonPagina);
                     }
-
                     // Botón "Siguiente"
                     if (nextPage) {
                         const botonSiguiente = document.createElement("button");
@@ -135,9 +170,8 @@ const {
     stock,
     code,
     thumbnail,
-    description
-} =
-formularioDeProductos;
+    description,
+} = formularioDeProductos;
 formularioDeProductos.addEventListener("submit", (e) => {
     e.preventDefault();
     fetch("http://localhost:8080/api/products", {
@@ -156,7 +190,6 @@ formularioDeProductos.addEventListener("submit", (e) => {
     });
     window.location.reload();
 });
-
 const verCarritoBtn = document.getElementById("verCarrito");
 verCarritoBtn.addEventListener("click", () => {
     const carritoId = document.getElementById("carritoId").value;
@@ -164,7 +197,6 @@ verCarritoBtn.addEventListener("click", () => {
 });
 
 function CarritoData(carritoid) {
-    console.log("carritoid", carritoid);
     fetch(`http://localhost:8080/api/carts/${carritoid}`)
         .then((response) => response.json())
         .then((data) => {
@@ -174,11 +206,11 @@ function CarritoData(carritoid) {
                 price: product.idproducto.price,
                 quantity: product.quantity,
             }));
-            console.log("productList", productList);
+
             // aquí puedes hacer algo con la lista de productos, como mostrarlos en una tabla o en el div con ID "carrito"
             const cartElement = document.getElementById("carrito");
             cartElement.innerHTML = ""; // limpia el contenido previo del div
-            /* cartElement.textContent = "Ver Carrito"; */
+            cartElement.textContent = "Ver Carrito";
             productList.forEach((product) => {
                 const productElement = document.createElement("div");
                 productElement.classList.add("product");

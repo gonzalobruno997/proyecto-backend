@@ -22,10 +22,6 @@
         <h1>{{role}}</h1>
     </div>
     <p>Bienvenido, {{userName}}!</p>
-    {{else}}
-    <button id="login" type="button" onclick="location.href='/auth/login'">Log in</button>
-    <button id="login" type="button" onclick="location.href='/auth/register'">Registrarse</button>
-    {{/if}}
 
     <h2>registre su producto</h2>
     <form id="formProducts">
@@ -62,7 +58,6 @@
 </div>
 
 <div id="contenedorProductos">
-
 </div>
 <h1>Chat Coderhouse</h1>
 <div>
@@ -76,7 +71,17 @@
 <button id="verCarrito" type="button">Ver Carrito</button>
 <div id="carrito" class="cart-button"></div>
 
+
+{{else}}
+<h1>Bienvenido a mi e-commerce!</h1>
+
+<button id="login" type="button" onclick="location.href='/auth/login'">Log in</button>
+<button id="login" type="button" onclick="location.href='/auth/register'">Registrarse</button>
+{{/if}}
+
+
 <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="./javascript/main.js"></script>
+
+<script src="../javascript/main.js"></script>

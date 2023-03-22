@@ -1,17 +1,19 @@
 <h1>lista de productos</h1>
 {{#if products}}
 <section>
-    {{#each products}}  
+    {{#each products}}
     <ul>
         <li>nombre:{{this.title}}</li>
         <li>precio:{{this.price}}</li>
         <li>stock:{{this.stock}}</li>
     </ul>
-    <button id="agregarCarrito" type="submit" value="enviar">Agregar al
-        Carrito</button>
+    <button class="agregarCarrito" type="submit" data-id="{{this._id}}">Agregar al Carrito</button>
     {{/each}}
 </section>
+
 {{/if}}
 {{#else}}
 <h2>aún no tenes productos</h2>
 {{/else}}
+
+<script src="../javascript/main.js"></script>
